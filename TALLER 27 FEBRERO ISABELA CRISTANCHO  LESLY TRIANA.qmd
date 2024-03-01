@@ -1,0 +1,155 @@
+---
+title: "TALLER 27 FEBRERO"
+author: "Isabela Cristancho- Lesly Triana"
+format: html
+editor: visual
+---
+
+## [**TALLER 27 FEBRERO**]{.smallcaps}
+
+*EJERCICIO C 3.1*
+
+1.  ¿Cual es el signo más probable para B2 ?
+
+2.  ¿Cree que cigs y faminc estén correlacionados? Explique por qué la correlación puede ser positiva o negativa.
+
+3.  Ahora, calcule la ecuación con y sin faminc utilizando los datos del archivo BWGHT. RAW. Dé los resultados en forma de ecuación incluyendo el tamaño de la muestra y la R- cuadrada. Explique sus resultados enfocándose en si el añadir faminc modifica de manera sustancial el efecto esperado de cigs sobre bwght.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(wooldridge)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+View(bwght)
+
+reg <- lm(bwght ~ cigs + faminc, data=bwght)
+summary(reg)
+
+
+cor(bwght$faminc, bwght$cigs)
+
+
+
+reg <- lm(bwght ~ cigs , data=bwght)
+summary(reg)
+
+```
+
++---------------+--------------+--------------+--------------+--------------+
+|               | Estimate     | Std.Error    | t value      | p value      |
++===============+==============+==============+==============+==============+
+| **Intercept** | ```          | ```          | ```          | ```          |
+|               | 119.77190    | 0.57234      | 209.267      | < 2e-16 ***  |
+|               | ```          | ```          | ```          | ```          |
++---------------+--------------+--------------+--------------+--------------+
+| **Cigs**      | ```          | ```          | ```          | ```          |
+|               | -0.51377     | 0.09049      | -5.678       | 1.66e-08 *** |
+|               | ```          | ```          | ```          | ```          |
++---------------+--------------+--------------+--------------+--------------+
+
++-----------------------+--------------+--------------+--------------+--------------+
+|                       | Estimate     | Std. Error   | t.value      | P-value      |
++=======================+==============+==============+==============+==============+
+| **Intercept**         | ```          | ```          | ```          | ```          |
+|                       | 116.97413    | 1.04898      | 111.512      | < 2e-16 ***  |
+|                       | ```          | ```          | ```          | ```          |
++-----------------------+--------------+--------------+--------------+--------------+
+| **cigs (fumar)**      | ```          | ```          | ```          | ```          |
+|                       | -0.46341     |  0.09158     | -5.060       | 4.75e-07 *** |
+|                       | ```          | ```          | ```          | ```          |
++-----------------------+--------------+--------------+--------------+--------------+
+| **faminc (ingresos)** | ```          | ```          | ```          | ```          |
+|                       |  0.09276     | 0.02919      | 3.178        | 0.00151 **   |
+|                       | ```          | ```          | ```          | ```          |
++-----------------------+--------------+--------------+--------------+--------------+
+
+1.  El signo para faminc mas probable es positivo, se espera que al tener mas ingresos durante el embarazo tenga un efecto positivo en el peso al nacer,ya que con mas ingresos hay mejores cuidados.
+2.  Si, las variables cigs y faminc tienen correlacion porque las mujeres de ingresos más altos tienen acceso a mejores cuidados prenatales y a una mejor nutrición y es posible que también tengan más conciencia de los riesgos de fumar durante el embarazo y sean menos propensas a fumar o que no tengan muchos ingresos para mejores cuidados y al tiempo fuman. Adicionalmente, segun en el coeficiente de correlación tienen una correlacion negativa (-0.1730449), cuando una variable aumenta (x), la otra (y) disminuye.
+3.  Al quitar la variable faminc de la ecuacion,el estimado de cigs es -0.51377, si tiene un cambio en la variable cigs porque al incluir faminc en la ecuacion el estimado para cigs es de -0.46341, por lo tanto faminc y cigs tienen un efecto sustancial y son estadísticamente significativos en el peso al nacer y al revisar el R cuadrado explica que con faminc es de 2.98% de la variabilidad del peso y disminuye sin faminc con un 2.27% de variabilidad del peso.
+
+*EJERCICIO C 3.2*
+
+1.  Escriba los resultados en forma de ecuación.
+
+2.  ¿Cual es el incremento en precio estimado para una casa con una habitación (bdrms) más, manteniendo constante la superficie en pies cuadrados (sqrft)?
+
+3.  ¿Cual es el incremento en precio estimado para una casa con una habitación adicional de 140 pies cuadrados? Compare esto con su respuesta al inciso (ii)
+
+4.  ¿Qué porcentaje de la variación en el precio se explica por la extensión en pies cuadrados y el número de habitaciones?
+
+5.  La primera casa en la muestra tiene sqrft 2,438 y bdrms 4. Determine el precio de venta estimado para esta casa con la línea de regresión de MCO.
+
+6.  El precio de venta de la primera casa en la muestra fue \$300,000 (así que price 300). Determine el residual para esta casa. ¿Sugiere esto que el comprador pagó de más o de menos por la casa?
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+View(hprice1)
+
+reg <- lm(price ~ bdrms + sqrft, data = hprice1)
+summary(reg)
+
+
+#Coeficiente e correlación
+cor(hprice1$bdrms , hprice1$sqrft)
+```
+
++----------------------------+--------------+--------------+--------------+--------------+
+|                            | Estimate     | Std. Error   | t value      | p value      |
++============================+==============+==============+==============+==============+
+| **Intercept**              | ```          | ```          | ```          | ```          |
+|                            | -19.31500    | 31.04662     | -0.622       |  0.536       |
+|                            | ```          | ```          | ```          | ```          |
++----------------------------+--------------+--------------+--------------+--------------+
+| **bdrms (habitación)**     | ```          | ```          | ```          | ```          |
+|                            | 15.19819     | 9.48352      |  1.603       | 0.113        |
+|                            | ```          | ```          | ```          | ```          |
++----------------------------+--------------+--------------+--------------+--------------+
+| **sqrft (pies cuadrados)** | ```          | ```          | ```          | ```          |
+|                            | 0.12844      |  0.01382     | 9.291        | 1.39e-14 *** |
+|                            | ```          | ```          | ```          | ```          |
++----------------------------+--------------+--------------+--------------+--------------+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+reg <- lm(price ~ bdrms + sqrft, data = hprice1)
+
+#Nuevo conjunto de datos con los valores específicos de sqrft y bdrms
+primer_casa <- data.frame(sqrft = 2438, bdrms = 4)
+
+#Predicción del precio de venta estimado para la nueva casa
+precio_estimado <- predict(reg, newdata = primer_casa)
+#Precio estimado
+print(precio_estimado)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+price=(-19.31500 + 15.19819*1 + 0.12844*140)
+print(price)
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+reg <- lm(price ~ bdrms + sqrft, data = hprice1)
+
+# Tomamos la primera fila de los datos
+primera_casa1 <- hprice1[1, ] 
+
+# Precio de venta observado para la primera casa
+precio_observado <- 300000
+
+# Predicción del precio de venta estimado para la primera casa
+precio_estimado <- predict(reg, newdata = primera_casa1)
+
+# Calcular el residual
+residual <- precio_observado - precio_estimado
+
+# Imprimir el residual
+print(residual)
+
+```
+
+1.  price= -19.31500 + 15.19819 bdrms + 0.12844 sqrft
+2.  Si aumenta una habitacion mas en bdrms aumenta en promedio 15.19819 miles de dolares en el precio.
+3.   Si la casa tiene una habitación de mas con 140 pies cuadrados el precio estimado es de 13.86479, lo cual en contraste con el punto dos
+4.  La variación del precio es de 63.19% en cuanto a la extensión en pies cuadrados y el número de habitaciones.
+5.  El estimado del precio para la primer casa cuando sqrft 2,438 y bdrms 4 es de 354.6052 miles de dolares
+6.  Cuando el precio de la primer casa es de 300.000, el residual es de 299645.4, es decir la diferencia entre el precio real y el estimado, por ende, el comprador pago mas por la casa, debido a que el precio real es mayor que el precio estimado
